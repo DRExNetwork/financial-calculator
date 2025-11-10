@@ -798,33 +798,31 @@ async function runCalculation() {
 
 
 
-    const projectCapacityKw = 1000;  // UNIT: kW DC
-    const percentageInvestedByOfftaker = 12 / 100;  // UNIT: Convert % to decimal (12%)
+    const projectCapacityKw = 2302.00;  // UNIT: kW DC
+    const percentageInvestedByOfftaker = 0 / 100;  // UNIT: Convert % to decimal (0%)
     const assetOwnershipTransferred = true;  // UNIT: Boolean
-    const projectSites = 10;  // UNIT: Number of sites
-    const projectCountry = "Colombia";  // UNIT: String
-    const epcCostExclVat = 2080000000;  // UNIT: $
-    const epcCostVat = 336000;  // UNIT: $
-    const currentElectricityTariff = 360;  // UNIT: $
+    const projectSites = 1;  // UNIT: Number of sites
+    const projectCountry = "Ecuador";  // UNIT: String
+    const epcCostExclVat = 1158000;  // UNIT: $
+    const epcCostVat = 55631.0000;  // UNIT: $
+    const currentElectricityTariff = 0.0760;  // UNIT: $/kWh
     const savingOnElectricityTariff = 0 / 100;  // UNIT: Convert % to decimal (0%)
-    const electricityForecastP90 = 1275000;  // UNIT: kWh
-    const opMaintenanceEpcExclVat = 5000;  // UNIT: $
+    const electricityForecastP90 = 2765000.0000;  // UNIT: kWh
+    const opMaintenanceEpcExclVat = 13800.0000;  // UNIT: $
     const surfaceAreaM2 = 10000;  // UNIT: m²
-    const landRentExpense = 22330000;  // UNIT: $
+    const landRentExpense = 0;  // UNIT: $
     const landExpenseExclVat = landRentExpense / surfaceAreaM2;  // UNIT: $/m²
-    const recsEnabled = true;  // UNIT: Boolean
-
-
+    const recsEnabled = false;  // UNIT: Boolean
 
     // Admin Fixed values
     const projectContingenciesPercentage = 3 / 100;  // UNIT: Convert % to decimal
     const capexDepreciationYears = 20;  // UNIT: years
     const annualPowerDegradation = 0.40 / 100;  // UNIT: Convert % to decimal
-    const inverterReplacementYear = 12;  // Year number
+    const inverterReplacementYear = 12;  // UNIT: Year number
     const insuranceRisk = 0.5 / 100;  // UNIT: Convert % to decimal
     const assetManagementFee = 3 / 100;  // UNIT: Convert % to decimal
     const recRate = 1.5;  // UNIT: $
-    const targetIrr = 12.25;  // UNIT: percentage
+    const targetIrr = 12.00;  // UNIT: % (CHANGED from 12.25 to 12)
 
 
     // Calculated inputs
@@ -846,8 +844,8 @@ async function runCalculation() {
 
 
     const projectReadinessExclVat = epcCostExclVat * 0.05;
-    const projectEsExcludingVat = epcCostExclVat * 0.01;
-    const projectDueDiligenceExclVat = lookupFx(projectCountry, fxTable) * 10000;
+    const projectEsExcludingVat = 0;
+    const projectDueDiligenceExclVat = 0;
     const projectContingenciesExcludingVat = projectContingenciesPercentage * (
         epcCostExclVat
         + projectManagementExcludingVat
@@ -904,17 +902,14 @@ async function runCalculation() {
     const capacityFactor = (projectCapacityKw * specificPowerOutput) / (
         8760 * projectCapacityKw
     );
+    const opMaintenanceMonitorExpenseExclVat = (12 * (1 - 0.2) * projectCapacityKw) * fxRate;
 
-    const opMaintenanceMonitorExpenseExclVat = (
-        12 * (1 - 0.2) * projectCapacityKw
-        + (240 + (400 * projectCapacityKw / 1000))
-    ) * fxRate;
 
     const opMaintenanceMonitorExpense = opMaintenanceMonitorExpenseExclVat / (
         projectCapacityKw * 1000
     );
 
-    const esReportingExclVat = 0.005 * epcCostExclVat;
+    const esReportingExclVat = 0;
     const inverterReplacementExclVat = 17 * projectCapacityKw * fxRate;
     const dismantlingCost = assetOwnershipTransferred ? 0 : 0.02 * epcCostExclVat;
     const recCost = recRate * fxRate;

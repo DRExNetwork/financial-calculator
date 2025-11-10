@@ -1,5 +1,38 @@
 # Changelog
 
+## Version 2.0.1 - Financial Calculator Field Computation Updates
+
+### Changes to Existing Field Computations
+
+#### 1. O&M & Monitoring Expense (ex VAT) - Simplified Formula
+- **Changed**: O&M monitoring expense calculation reduced to core components
+- **Old Formula**: `(12*(1-0.2)*project_capacity_kw+(240+(400*project_capacity_kw/1000)))*fx_rate`
+- **New Formula**: `(12*(1-0.2)*project_capacity_kw)*fx_rate`
+
+#### 2. ES Reporting (ex VAT) - Set to Zero
+- **Changed**: ES Reporting exclusion VAT expense set to 0
+- **Old Value**: Calculated value
+- **New Value**: `0`
+
+
+#### 3. Project Due Diligence (ex VAT) - Set to Zero
+- **Changed**: Project due diligence expense set to 0
+- **Old Value**: Calculated value
+- **New Value**: `0`
+
+
+#### 4. Project ES (ex VAT) - Set to Zero
+- **Changed**: Project environmental/social expense set to 0
+- **Old Value**: Calculated value
+- **New Value**: `0`
+
+
+#### 5. Target IRR Threshold Update
+- **Changed**: Target IRR threshold reduced for PPA term optimization
+- **Old Value**: 12.5%
+- **New Value**: 12.00%
+
+
 ## Version 2.0.0 - Financial Calculator Update 2025-11-07
 
 ### Major Changes
