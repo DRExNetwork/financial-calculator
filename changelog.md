@@ -1,6 +1,9 @@
 # Changelog
 
 ## Version 2.1.0 - Exit Values Calculation Methodology Update
+**File Reference JavaScript**: `updated_cal_logic_11_26_v2.js`
+**File Reference python**: `updated_calculator_logic_11_26_v2.py`
+
 
 ### Major Changes
 
