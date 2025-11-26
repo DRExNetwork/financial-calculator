@@ -1,5 +1,55 @@
 # Changelog
 
+## Version 2.1.0 - Exit Values Calculation Methodology Update
+
+### Major Changes
+
+#### 1. Exit Values Calculation Method - Replaced IRR-based with EBITDA PV Method
+- **Changed**: Exit value calculation from IRR-based approach to present value of remaining EBITDA stream
+- **Old Method**: `computeExitValuesAndIrrs()` - calculated IRR by adding exit value to year T cashflow and solving for IRR
+- **New Method**: `computeExitValuesFromEbitda()` - calculates PV of remaining EBITDA (years T+1..n) discounted at 10%
+
+#### 2. New Exit Values Output Structure
+- **Old Output Fields**: 
+  - Exit Year
+  - Exit Value at Year T
+  - IRR with Exit (%)
+  
+- **New Output Fields**:
+  - Exit Year: Year at which project is exited
+  - Exit Value @T (USD): Present value at year T of remaining EBITDA stream (years T+1..n)
+  - Exit Value @0 PV (USD): Exit value discounted back to year 0 (for apples-to-apples comparison vs CAPEX)
+
+
+
+#### 3. Updated Console Output Format
+```
+Exit Scenarios (Unlevered, 10% discount on remaining cashflows)
+================================================================
+Exit Year | Exit Value @T ($)    | Exit Value @0 PV ($)
+---------+----------------------+---------------------
+    5    | $X,XXX,XXX.XX        | $X,XXX,XXX.XX
+   10    | $X,XXX,XXX.XX        | $X,XXX,XXX.XX
+   15    | $X,XXX,XXX.XX        | $X,XXX,XXX.XX
+```
+
+#### 5. New Function: `computeExitValuesFromEbitda()`
+- **Purpose**: Calculate exit scenarios based on remaining EBITDA stream valuation
+- **Parameters**:
+  - `ebitda`: Array of EBITDA values by year (index 0..n)
+  - `discountRate`: Discount rate for PV calculations (default: 0.10 = 10%)
+  - `exitYears`: Array of exit years to analyze (default: [5, 10, 15])
+- **Returns**: Array of exit records with Exit Year, Exit Value @T, and Exit Value @0 PV
+- **Behavior**: Automatically filters to only valid exit years within project tenor
+
+#### 6. Integration with `runCalculation()`
+- **Old Code**: Called `computeExitValuesAndIrrs(projectCf, 0.10, [5, 10, 15])`
+- **New Code**: Calls `computeExitValuesFromEbitda(ebitdaSeries, 0.10, [5, 10, 15])`
+- **Data Source**: Uses `optimalResultTable["EBITDA"]` instead of `resultTable["Project Cashflow"]`
+
+---
+
+
 ## Version 2.0.1 - Financial Calculator Field Computation Updates
 
 ### Changes to Existing Field Computations
